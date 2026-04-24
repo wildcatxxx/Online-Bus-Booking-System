@@ -1,0 +1,269 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+<style>
+
+        .article{
+            position: relative;
+            background-image: url({% static 'images/seat_available.png' %});
+            background-size: 50px;
+            width: 50px;
+            height: 65px;
+            margin: 5px;
+            float: left;
+            box-sizing: border-box;
+        }
+        .books{
+            position: relative;
+            background-image: url({% static 'images/seat_booked2.png' %});
+            background-size: 50px;
+            width: 50px;
+            height: 65px;
+            margin: 5px;
+            float: left;
+            box-sizing: border-box;
+        }
+        .article div{
+            width: 100%;
+            height: 100%;
+            line-height: 25px;
+            transition: .5s ease;
+        }
+        .toleft{
+            float: right;
+            padding: 5px;
+            margin-top: -10px;
+            font-weight: bold;
+        }
+        .article input{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 50px;
+            height: 65px;
+            opacity: 0;
+            cursor: pointer;
+        }
+        input[type=checkbox]:checked ~ div{
+            background-image: url({% static 'images/seat_selected.png' %});
+            background-size: 50px;
+        }
+
+
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div class="hero inner-page" style="background-image: url({% static 'images/bgr.jpg' %});">
+    <div class="container">
+        <div class="row align-items-end ">
+            <div class="col-lg-5">
+                <div class="intro">
+                    <h1><strong>Book</strong></h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="site-section bg-light">
+    <div class="container">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{{message.tags}}" role="alert" id="message_container">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% if random %}
+        <div class="row align-items-center ">
+
+        </div>
+
+        <div class="row align-items-center justify-content-center">
+
+            <div class="mb-4 mb-md-0 col-md-4">
+                <div class="listing d-block  align-items-stretch">
+                    <div class="listing-img mr-4">
+                        <img src="{{ bus.image.url }}" alt="Image" class="img-fluid" style="height:200px; width:100%;">
+                    </div>
+                    <div class="listing-contents">
+                        <h3>{{ bus.brand }} <br> {{ bus.model }} ({{ bus.plate_No }})</h3>
+                        <div class="">
+                            Fare: </span><strong>Gh¢ {{ bus.price|floatformat:2 }}</strong>
+                        </div>
+                        <div class="d-block d-md-flex mb-3 border-bottom pb-3">
+                            <div class="listing-feature pr-4">
+                                <span class="caption">Destination:</span><br>
+                                <span class="number">{{ bus.destination }}</span>
+                            </div>
+                            <div class="listing-feature pr-4">
+                                <span class="caption">Departure:</span><br>
+                                <span class="number">{{ bus.departure_Date }}</span>
+                            </div>
+                        </div>
+                        <div>
+                            <p>{{ bus.description }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-5 mb-md-0 col-md-5">
+                <div class="col-lg-12">
+                    <form method="POST" class="post-form">
+
+                            {% csrf_token %}
+                                <div id="" class="">
+                                    <label for="">Ticket Holder</label><br>
+                                    <input type="text" name="username"
+                                           pattern="[A-Z a-z]+" title="Enter Letters" required ><br>
+                                    <label for="">Seats Booking</label><br>
+                                    <input type="number" min="1" max="{{ bus.available_Seat }}" name="seats"  required >
+                                    <br>
+                                </div>
+                        <br>
+                        <div align="center">
+                            <button type="submit" class="btn btn-warning btn-block py-3"> Book</button>
+
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+
+        {% else %}
+
+        <div class="row align-items-center ">
+            <div class="mb-4 mb-md-0 col-md-4">
+            </div>
+            <div class=" mb-md-0 col-md-5 ">
+                <h2 class="page-header" align="center">Seats</h2>
+            </div>
+            <div class="mb-1 mb-md-0 col-md-1">
+                <img src="{% static 'images/seat_available.png' %}" alt="" style="width:25px; height: 32.5px">
+                <span> Available </span>
+            </div>
+
+            <div class="mb-1 mb-md-0 col-md-1">
+                <img src="{% static 'images/seat_selected2.png' %}" alt="" style="width:25px; height: 32.5px">
+                <span> Selected </span>
+            </div>
+
+            <div class="mb-1 mb-md-0 col-md-1">
+                <img src="{% static 'images/seat_booked2.png' %}" alt="" width="150" height=""
+                     style="width:25px; height: 32.5px">
+                <span> Booked </span>
+            </div>
+        </div>
+        <div class="row align-items-center justify-content-center">
+
+            <div class="mb-4 mb-md-0 col-md-4">
+                <div class="listing d-block  align-items-stretch">
+                    <div class="listing-img mr-4">
+                        <img src="{{ bus.image.url }}" alt="Image" class="img-fluid">
+                    </div>
+                    <div class="listing-contents">
+                        <h3>{{ bus.brand }} <br> {{ bus.model }} ({{ bus.plate_No }})</h3>
+                        <div class="">
+                                Fare: </span><strong>Gh¢ {{ bus.price|floatformat:2 }}</strong>
+                        </div>
+                        <div class="d-block d-md-flex mb-3 border-bottom pb-3">
+                            <div class="listing-feature pr-4">
+                                <span class="caption">Destination:</span><br>
+                                <span class="number">{{ bus.destination }}</span>
+                            </div>
+                            <div class="listing-feature pr-4">
+                                <span class="caption">Departure:</span><br>
+                                <span class="number">{{ bus.departure_Date }}</span>
+                            </div>
+                        </div>
+                        <div>
+                            <p>{{ bus.description }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-8 mb-md-0 col-md-8">
+                <div class="col-lg-12">
+                    {% for book in is_booked %}
+                    <div class="app">
+                        <input type="hidden" class="book" value="{{ book }}">
+                    </div>
+                    {% endfor %}
+                    <form method="POST" class="post-form">
+
+                        <div class="form-group">
+                            {% csrf_token %}
+                            <div class="col-md-12">
+                                <label for="" style="font-weight:bold;">Ticket Holder:</label><br>
+                            <input type="text" name="username" style="width:80%;"
+                                   pattern="[A-Z a-z]+" title="Enter Letters" required >
+                            </div>
+                            {% for seat in seats %}
+
+                            <div class="app">
+                                <div id="{{seat}}" class="article">
+                                    <input type="checkbox" name="seatNo" class="seat " id="let{{ seat }}"
+                                           value="{{ seat }}">
+                                    <div>
+                <span class="toleft">
+                    <p>{{ seat }}</p>
+                </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {% endfor %}
+
+                        </div>
+                        <div align="center">
+                            <button type="submit" class="btn btn-primary btn-block py-3"> Book </button>
+
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+
+        {% endif %}
+    </div>
+</div>
+<script>
+var x = document.querySelectorAll(".book");
+var classes =Array.prototype.map.call(x, function(element){
+return element.value;});
+
+var y = document.querySelectorAll(".seat");
+var classes2 =Array.prototype.map.call(y, function(element){
+return element.value;});
+
+if (classes2.length !== classes.length) {console.log("false");};
+for (let i = 0; i < classes2.length; i++) {
+    for (let j = 0; j < classes.length; j++) {
+    var toggle = classes2[i] === classes[j];
+        if (toggle) {
+
+            console.log("yes match", classes2[i], classes[j]);
+            var book = classes[j]
+            var id_str = "let"+book
+            console.log("id_str", id_str);
+
+            var seated = document.getElementById(book);
+            seated.classList.add("books");
+
+            var child = document.getElementById(id_str);
+            seated.removeChild(child)
+            continue;
+        }
+    }
+}
+
+
+</script>
+{% endblock %}
+

@@ -1,0 +1,21 @@
+
+{% block content %}
+    <div class="bus">
+		<h2>Model: {{ bus.brand }}</h2>
+		<p>Plate: {{ vehbusicle.plate_No }}</p>
+		<p>Capacity: {{ bus.people_capacity }}</p>
+		<p>Price/km: {{ bus.price_per_km }}</p>
+		<p>Description: {{ bus.destination }}</p>
+		<p>Available for cutomers: {{vehicle.available_for_cutomers}}</p>
+		<p>
+
+		<form action="/your-name/" method="post">
+
+			<label for="your_name">Your name: </label>
+			<input id="your_name" type="text" name="your_name" value="{{ current_name }}">
+
+		<input type="submit" value="OK">
+		</form>
+    </div>
+
+    {% endblock %}

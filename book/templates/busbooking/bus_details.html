@@ -1,0 +1,49 @@
+{% extends 'admin_base.html' %}
+
+
+{% block content %}
+
+
+<div class="container-fluid mt--4 justify-content-center col-lg-12">
+    <div class="row justify-content-center bg-primary " >
+        <div class="mb-4 mb-md-0 col-md-4" style="margin-top:2rem;">
+            <div class="card" style="min-height: 53vh;">
+
+                <div class="row align-items-center">
+                    <div class="col">
+
+                        <h3 class="page-header" style="font-size: 2rem; text-align:center;">Bus details</h3>
+
+                    </div>
+                </div>
+                <div class="card-body">
+
+                    <div class="row align-items-center">
+                        <ul>
+                        <li>Brand: {{ Bus.brand }}</li>
+                        <li>Model: {{ Bus.model }}</li>
+                        <li>Plate: {{ Bus.plate_No }}</li>
+                        <li>Capacity: {{ Bus.capacity }}</li>
+                        <li>Destination: {{ Bus.destination }}</li>
+                        <li>Price: {{ Bus.destination.price }}</li>
+
+                        <li>Description: {{ Bus.description }}</li>
+                        <li>Available for Passengers: {{Bus.available}}</li>
+                        <li>Current Driver: {{Bus.driver}}</li>
+                        <a href="{% url 'edit_bus' id=Bus.id %}">
+                            <button type="button" class="btn btn-primary btn-md">Edit</button>
+                        </a>
+                            </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mb-8 mb-md-0 col-md-8" style="margin-top:2rem;">
+<div class="card bg-default">
+                <img src="{{ Bus.image.url }}" alt="Image" class="img-fluid" style="min-height: 53vh;">
+
+</div>
+        </div>
+    </div>
+</div>
+{% endblock %}

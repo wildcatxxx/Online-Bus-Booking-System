@@ -1,0 +1,7 @@
+Django==3.2.4
+python-decouple==3.8
+Pillow==9.5.0
+qrcode==7.4.2
+requests==2.31.0
+twilio==8.10.0
+django-environ==0.10.0

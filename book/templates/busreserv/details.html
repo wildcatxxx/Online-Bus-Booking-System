@@ -1,0 +1,41 @@
+{% extends 'busreserv/base.html' %}
+
+{% block content %}
+
+<div class="row">
+  <div class="col-xs-3 col-md-3"></div>
+  <div class="col-xs-6 col-md-6">
+
+      <div class="col-lg-12">
+          <h3 class="page-header" >Thank you {{ Reservation.client_Name }} for using our services</h3>
+      </div>
+
+          <p>We sent you the email with this information on {{ Reservation.client_Phone }}</p>
+          <p>You Booked this bus for  <strong>{{Reservation.departure_Date}}</strong> to <strong>{{Reservation.destination.destination_To }}</strong> </p>
+
+      <p>Name: {{ Reservation.client_Name }}</p>
+      <p>Phone: {{ Reservation.client_Phone }}</p>
+      <p>Seat No.: {{ Bus.number_of_passengers }}</p>
+
+      <h4>Book Code: {{ code }}</h4>
+
+        <h3>Bus</h3>
+        <p>model: {{ Bus.brand }}</p>
+        <p>Plate: {{ Bus.plate_No }}</p>
+        <p>Capacity: {{ Bus.capacity }}</p>
+        <p>Description: {{ Bus.description }}</p>
+
+        <h3>Cost: GHc {{ Reservation.destination.price }}</h3>
+        <p>Best regards</p>
+        <p>GH Transport</p>
+
+          <p align="right"><a href="/"><button type="button" class="btn btn-default btn-md">Back to main page</button></a></p>
+
+  </div>
+  <div class="col-xs-3 col-md-3"></div>
+</div>
+
+
+
+
+{% endblock content %}

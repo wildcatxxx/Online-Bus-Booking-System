@@ -1,0 +1,22 @@
+{% extends 'busreserv/base.html' %}
+
+{% block content %}
+
+    <h2>Bus details</h2>
+    <p>Model: {{ Bus.brand }}</p>
+    <p>Plate: {{ Bus.plate_No }}</p>
+    <p>Capacity: {{ Bus.capacity }}</p>
+    <p>Destination: {{ Bus.destination }}</p>
+    <p>Price: {{ Bus.destination.price }}</p>
+
+    <p>Description: {{ Bus.description }}</p>
+    <p>Available for Passengers: {{Bus.available_for_passengers}}</p>
+    <p>Current Driver: {{Bus.current_Driver}}</p>
+    <a href="{% url 'edit_vehicle' id=Bus.id %}"><button type="button" class="btn btn-primary btn-md">Edit</button> </a>
+    <a href="{% url 'change_departure' id=Bus.id %}"><button type="button" class="btn btn-primary btn-md">Departure</button> </a>
+    <a href="{% url 'delete_vehicle_name' id=Bus.id %}"><button type="button" class="btn btn-primary btn-md">Delete</button> </a>
+
+    <p align="right"><a href="/panel"><button type="button" class="btn btn-primary btn-md">Admin panel</button></a></p>
+
+
+{% endblock %}

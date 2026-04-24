@@ -1,0 +1,91 @@
+{% extends 'admin_base.html' %}
+
+
+{% block content %}
+    <div class="header bg-primary pb-6">
+      <div class="container-fluid">
+        <div class="header-body">
+          <div class="row align-items-center py-4">
+            <div class="col-lg-12 col-12 text-right">
+              <a href="{% url 'driver' %}" class="btn btn-sm btn-neutral" style="padding: 0.75rem 2rem; font-size: 1rem;">+ Add Driver</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+<div class="container-fluid mt--6">
+
+    {% if not drivers %}
+    <h2>There are no Drivers are the moment</h2>
+
+    {% else %}
+    <div class="row justify-content-center">
+        <div class="mb-12 mb-md-0 col-md-10">
+            <div class="card" style="min-height: 53vh;">
+                <div class="card-header bg-transparent">
+                    <div class="row align-items-center">
+
+                        {% if messages %}
+                        {% for message in messages %}
+                        <div class="alert alert-{{message.tags}}" role="alert" id="message_container">
+                            {{ message }}
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+
+                        <div class="col">
+
+                            <h3 class="page-header" style="font-size: 2rem; text-align:center;">Drivers</h3>
+
+                        </div>
+                    </div>
+                    <div class="row align-items-center">
+                        <table class="col-lg-12 table">
+                            <thead align="center">
+                            <tr>
+                                <th>Driver</th>
+                                <th>Phone</th>
+                                <th>Address</th>
+                                <th width="40%">Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for driver in drivers %}
+                            <tr>
+                                <td>{{ driver }}</td>
+                                <td> 0{{ driver.phone_1}}</td>
+                                <td> {{ driver.address}}</td>
+                                <td>
+                                    <div class="row">
+                                        <div class="mb-6 mb-md-0 col-md-6">
+                                            <a href="{% url 'edit_driver' id=driver.id %}">
+                                                <button type="button" class="btn btn-warning btn-md">Update</button>
+                                            </a>
+
+                                        </div>
+                                        <div class=" mb-6 mb-md-0 col-md-6">
+                                            <a href="{% url 'delete_driver' id=driver.id %}">
+                                                <button type="button" class="btn btn-danger btn-md">Delete</button>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    {% endif %}
+
+</div>
+
+
+{% endblock %}

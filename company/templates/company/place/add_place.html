@@ -1,0 +1,86 @@
+{% extends 'admin_base.html' %}
+{% load static %}
+{% block head %}
+<style>
+
+    .trip-form input{
+    width: 100%
+    }
+    p {
+      margin-top: 0;
+    margin-bottom: 0.5rem;
+
+    }
+    label{
+    display: inline-block;
+    margin-bottom: 0rem;
+    }
+    input {
+    width: 100%;
+}
+
+
+</style>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container-fluid mt--4">
+    <div class="row align-items-center justify-content-center">
+        <div class="mb-6 mb-md-0 col-md-6">
+            <div class="card" style="min-height: 53vh;">
+
+                <div class="card-header bg-transparent">
+                    <div class="row align-items-center">
+                        <div class="col">
+
+                            <h3 class="page-header" style="font-size: 2rem; text-align:center;">{% if edit %} Update {% else %} Add {% endif %} Place</h3>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+
+                    {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert bg-info text-red" role="alert">
+                                    <strong>{{ message }}</strong>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+
+
+                    <form action="" method="post" enctype="multipart/form-data" class="post-form align-items-center">
+                        {% csrf_token %}
+                        <div class="row align-items-center justify-content-center">
+                            <div class=" col-lg-10">
+                                {% for field in formplace %}
+                                <p>
+                                    {{ field.label_tag }}<br>
+                                    {{ field }}
+                                    {% for error in field.errors %}
+                                    <div class="text-red" >
+                                    {{ error }}
+                                </div>
+                                    {% endfor %}
+                                </p>
+                            {% endfor %}
+                            </div>
+                            <div class=" col-lg-10">
+                                <button type="submit" class="btn btn-default">{% if edit %} Update {% else %} Add {% endif %}</button>
+
+                            </div>
+                        </div>
+
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

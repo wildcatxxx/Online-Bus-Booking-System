@@ -1,0 +1,70 @@
+{% extends 'busreserv/base.html' %}
+
+{% block content %}
+<!-- Autokar   adsasd -->
+	<div class="row">
+
+		{% if not buses %}
+			<div class="col-lg-12">
+				<h2 class="page-header">No avilable buses :(, try another time.</h2>
+			</div>
+		{% endif %}
+
+		{% for Bus in buses %}
+
+
+		<div class="col-lg-12">
+			<h2 class="page-header" > </h2>
+		</div>
+
+		<div class="col-md-6">
+			<div class="col-lg-12">
+				<h2 class="page-header">Model: {{ Bus.brand }}</h2>
+			</div>
+
+			<p>This model is characterized by</p>
+			<ul>
+				<li>
+					<strong>Plate: {{ Bus.plate_No }}</strong>
+				</li>
+				<li>Capacity: {{ Bus.capacity }}</li>
+				<li>Destination: {{ Bus.destination }}</li>
+				<li>Departure: {{ Bus.departure_Date }}</li>
+				<li>Time: {{ Bus.time_Session }}</li>
+				<li>Passengers: {{ Bus.number_of_passengers }}</li>
+
+
+			</ul>
+			<p>Description: {{ Bus.description }}   </p>
+
+			</br>
+			</br>
+			<row>
+				<div class="col-md-2">
+
+				</div>
+
+				<div class="col-md-8">
+	                    <a class="btn btn-lg btn-default btn-block" href="{% url 'newreservation_name' id=Bus.id %}">Book</a>
+	            </div>
+				<div class="col-md-2">
+
+	            </div>
+
+			</row>
+
+		</div>
+		<div class="col-md-6">
+			<img class="img-responsive" src="{{ Bus.image.url }}" alt="">
+		</div>
+
+		
+
+	{% endfor %}
+	</div>
+	<!-- Autokar-->
+
+
+
+
+{% endblock content %}

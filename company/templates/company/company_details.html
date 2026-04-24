@@ -1,0 +1,25 @@
+
+{% block content %}
+
+    <h2>Company Details</h2>
+    <h4>Code: {{ company.code }}</h4>
+    <p>Company Name: {{ company.company_name}}</p>
+    <p>Company Initials: {{ company.company_initials }}</p>
+    <p>Address: {{ company.address }}</p>
+    <p>Email: {{ company.email }}</p>
+
+    <p>Contact 1: {{ company.contact_1 }}</p>
+    <p>Contact 2: {{company.contact_2}}</p>
+    <p>Contact 3: {{company.contact_2}}</p>
+    <p>Contact 4: {{company.contact_4}}</p>
+
+
+    <!--  -->
+
+    <a href="{% url 'edit_company' id=company.id %}"><button type="button" class="btn btn-primary btn-md">Edit</button> </a>
+    <a href="#"><button type="button" class="btn btn-primary btn-md">Delete</button> </a>
+
+    <p align="right"><a href="/panel"><button type="button" class="btn btn-primary btn-md">Admin panel</button></a></p>
+
+
+{% endblock %}

@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<!-- saved from url=(0056)index.html -->
+
+
+{% block content %}
+
+<div class="site-wrap" id="home-section">
+    <div class="hero inner-page" style="background-image: url({% static 'images/bgr.jpg' %});">
+        <div class="container">
+            <div class="row align-items-end ">
+                <div class="col-lg-5">
+                    <div class="intro">
+                        <h1><strong>Buses</strong></h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="site-section bg-light">
+        <div class="container">
+            <div class="text-center">
+                <h4 style="font-weight:bold;">Search results...</h4>
+            </div>
+            {% for company in companies %}
+
+             {% if search %}
+            {% for Bus in search %}
+            {% if Bus.company == company %}
+            <hr>
+            <div class="col-lg-7">
+                <h3 class="section-heading">{{ company.company }}</h3>
+            </div>
+            <hr>
+            <br>
+            <div class="row">
+                <div class="col-md-6 col-lg-4 ">
+                    <div class="listing d-block  align-items-stretch">
+                        <div class="listing-img mr-4">
+                            <img src="{{ Bus.image.url }}" alt="Image" class="img-fluid" style="height:200px; width:100%;">
+                        </div>
+                        <div class="listing-contents">
+                            <h3>{{ Bus.brand }} <br> {{ Bus.model }} ({{ Bus.plate_No }})</h3>
+                            <div class="">
+                                Fare: </span><strong>Gh¢ {{ Bus.price|floatformat:2 }}</strong>
+                            </div>
+                            <div class="d-block d-md-flex mb-3 border-bottom pb-3">
+                                <div class="listing-feature pr-4">
+                                    <span class="caption">Destination:</span><br>
+                                    <span class="number">{{ Bus.destination }}</span>
+                                </div>
+                                <div class="listing-feature pr-4">
+                                    <span class="caption">Departure:</span><br>
+                                    <span class="number">{{ Bus.departure_Date }}</span>
+                                </div>
+                            </div>
+                            <div>
+                                <p>{{ Bus.description }}
+                                </p>
+                                <p><a href="{% url 'book_now' id=Bus.id %}" class="btn btn-primary btn-sm">Book Now</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            {% endif %}
+            {% endfor %}
+
+            {% else %}
+
+            {% if not buses %}
+            <h2>There are no Buses are the moment</h2>
+            {% endif %}
+
+
+            <div class="col-lg-7">
+                <hr>
+                <h3 class="section-heading">{{ company.company }}</h3>
+                <hr>
+            </div>
+            <br>
+
+            <div class="row">
+                {% for Bus in buses %}
+            {% if Bus.company == company %}
+                <div class="col-md-6 col-lg-4 ">
+                    <div class="listing d-block  align-items-stretch">
+                        <div class="listing-img mr-4">
+                            <img src="{{ Bus.image.url }}" alt="Image" class="img-fluid" style="height:200px; width:100%;">
+                        </div>
+                        <div class="listing-contents">
+                            <h3>{{ Bus.brand }} <br> {{ Bus.model }} ({{ Bus.plate_No }})</h3>
+                            <div class="">
+                                Fare: </span><strong>${{ Bus.price }}</strong>
+                            </div>
+                            <div class="d-block d-md-flex mb-3 border-bottom pb-3">
+                                <div class="listing-feature pr-4">
+                                    <span class="caption">Destination:</span><br>
+                                    <span class="number">{{ Bus.destination }}</span>
+                                </div>
+                                <div class="listing-feature pr-4">
+                                    <span class="caption">Departure:</span><br>
+                                    <span class="number">{{ Bus.departure_Date }}</span>
+                                </div>
+                            </div>
+                            <div>
+                                <p>{{ Bus.description }}
+                                </p>
+                                <p><a href="{% url 'book_now' id=Bus.id %}" class="btn btn-primary btn-sm">Book Now</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {% endif %}
+
+                {% endfor %}
+
+            </div>
+
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

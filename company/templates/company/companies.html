@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+    body{
+    margin:0% 10% 0% 10%;
+    }
+    .hero{width:100%}
+        .hero2{float:left;}
+
+        .hero p { display:inline;margin:20px;}
+                .hero2 p { display:inline;margin:20px ;}
+
+    </style>
+</head>
+<body>
+<div class="hero">
+    <p>Code </p>
+    <p style="margin:60px;">Company </p>
+    <p style="margin:-10px;">Email </p>
+    <p style="margin:160px;">Phone </p>
+    <br><br>
+</div>
+{% if not companies %}
+<h2>There are no Companies at the moment</h2>
+
+{% else %}
+
+{% for company in companies %}
+
+<div class="col-md-6 hero2">
+
+
+    <p>{{ company.code }} </p>
+    <p>{{ company.Company_name }} </p>
+    <p>{{ company.email }} </p>
+    <p>{{ company.contact_1 }} </p>
+    <p><a class="btn btn-lg btn-default btn-block" href="{% url 'company_details' id=company.id %}">View</a></p>
+</div>
+<br><br>
+    {% endfor %}
+
+    {% endif %}
+
+</body>
+</html>

@@ -1,0 +1,21 @@
+
+{% block content %}
+
+    <h2>Driver Info</h2>
+
+
+    <h1>{{ driver.company_name }}</h1>
+    <p>Company Name: {{ driver.first_name}}</p>
+    <p>Company Initials: {{ driver.last_name }}</p>
+    <p>Phone: {{ driver.phone_1 }}</p>
+    {%if driver.phone_2 is not None %}
+    <p>Phone: {{ driver.phone_2 }}</p>
+    {% endif %}
+
+    <!--  -->
+
+    <a href="{% url 'edit_driver' %}"><button type="button" class="btn btn-primary btn-md">Edit</button> </a>
+    <p align="right"><a href="/panel"><button type="button" class="btn btn-primary btn-md">Admin panel</button></a></p>
+
+
+{% endblock %}

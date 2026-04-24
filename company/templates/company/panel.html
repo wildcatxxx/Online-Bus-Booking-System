@@ -1,0 +1,151 @@
+{% extends 'admin_base.html' %}
+{% load static %}
+
+
+
+{% block content %}
+<div class="header bg-primary pb-6">
+      <div class="container-fluid">
+        <div class="header-body">
+          <!-- Card stats -->
+			{% if messages %}
+			{% for message in messages %}
+			<div class="alert alert-{{message.tags}}" role="alert" id="message_container">
+				{{ message }}
+			</div>
+			{% endfor %}
+			{% endif %}
+{% if user.is_superuser is True %}
+
+	<div class="row row-col-lg-1">
+		<div class="btn-lg btn-default col  m-5p" style="margin: 0px 5px;">
+			<a class="btn btn-block " href="{% url 'companysignup' %}">Add Company</a>
+			<a class="btn btn-block " href="{% url 'company_view' %}">View Companies</a>
+		</div>
+		<div class="btn-lg btn-info col  m-5p" style="margin: 0px 5px;">
+			<a class="btn btn-block " href="{% url 'add_place' %}">Add Place</a>
+			<a class="btn btn-block " href="{% url 'places_view' %}">View Places</a>
+		</div>
+	</div>
+{% elif user.id is User %}
+	<div class="row row-col-lg-2 ">
+
+		<div class="btn-lg btn-info col  m-5p" style="margin: 0px 5px;">
+					<a class="btn btn-block" href="{% url 'add_place' %}">Add Place</a>
+					<a class="btn btn-block" href="{% url 'places_view' %}">View Places</a>
+
+		</div>
+		<div class="btn-lg bg-warning col  m-5p " style="margin: 0px 5px;">
+			<a class="btn btn-block " href="{% url 'add_destination' %}">Add Destination</a>
+			<a class="btn btn-block " href="{% url 'destinations_view' %}">View Destination</a>
+
+		</div>
+		<div class="btn-lg btn-success col m-5p " style="margin: 0px 5px;">
+			<a class="btn btn-block" href="{% url 'addbus' %}">Add Bus</a>
+			<a class="btn btn-block" href="{% url 'buses_view' %}">View Buses</a>
+
+		</div>
+		<div class="btn-lg btn-danger col m-5p" style="margin: 0px 5px;">
+			<a class="btn btn-block" href="{% url 'driver' %}">Add Driver</a>
+			<a class="btn btn-block" href="{% url 'drivers_view' %}">View Drivers</a>
+		</div>
+	</div>
+{% else %}
+	<p>No prior User</p>
+
+{% endif %}
+
+        </div>
+      </div>
+    </div>
+	{% for company in companies %}
+
+
+    <!-- Page content -->
+    <div class="container-fluid mt--4">
+      <div class="row justify-content-center">
+		   {% for Bus in buses %}
+
+			{% if Bus.company == company %}
+		<div class="mb-4 mb-md-0 col-md-4">
+          <div class="card" style="min-height: 53vh;">
+
+            <div class="card-header bg-transparent">
+              <div class="row align-items-center">
+                <div class="col">
+
+					<h3 class="page-header" style="font-size: 2rem;">Model: {{ Bus.brand }}</h3>
+
+				<p><strong>Plate: {{ Bus.plate_No }}</strong></p>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <!-- Chart -->
+				<ul>
+
+					<li>Capacity: {{ Bus.capacity }}</li>
+					<li>Destination: {{ Bus.destination }}</li>
+					<li>Departure Date: {{ Bus.departure_Date }}</li>
+					<li>Time: {{ Bus.time_Session }}</li>
+					<li>Available Seats: {{ Bus.available_Seat }}</li>
+				</ul>
+				<p>Description: {{ Bus.description }}   </p>
+				<div class="row">
+					 <div class="mb-6 mb-md-0 col-md-6">
+		                    <a class="btn btn-lg btn-default btn-block" href="{% url 'bus_details' id=Bus.id %}">Details</a>
+		            </div>
+					<div class=" mb-6 mb-md-0 col-md-6">
+						<a class="btn btn-lg btn-warning btn-block" href="{% url 'bus_details' id=Bus.id %}">Departure</a>
+					</div>
+				</div>
+
+            </div>
+          </div>
+        </div>
+        <div class="mb-8 mb-md-0 col-md-8">
+          <div class="card bg-default">
+            <div class="card-header bg-default " style="min-height: 53vh;" >
+				  <table class="table text-white">
+				    <thead>
+				      <tr>
+						<th>Book Date</th>
+  						<th>Client Name</th>
+  						<th>Client Phone</th>
+  						<th>Destination</th>
+				      </tr>
+				    </thead>
+				    <tbody>
+					<h4 class="text-white">Booking for Bus Number: <strong>{{ Bus.plate_No }}</strong> from <strong>{{ Bus.destination }}</strong>, Departing on <strong>{{ Bus.departure_Date }}</strong> </h4>
+
+						{%for r in res%}
+							{%if r.bus == Bus %}
+
+								  <tr>
+									<td>{{r.book_Date}}</td>
+		  							<td>{{r.client_fname}} {{r.client_fname}}</td>
+		  							<td>{{r.client_phone}}</td>
+		  							<td>{{r.destination}}</td>
+							      </tr>
+
+							{% endif %}
+						{% endfor %}
+				    </tbody>
+				  </table>
+			</div>
+          </div>
+        </div>
+			{% endif %}
+
+			{% endfor %}
+      </div>
+
+      <!-- Footer -->
+
+
+
+
+			{% endfor %}
+
+</div>
+{% endblock content %}

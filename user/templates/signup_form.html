@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+<style>
+
+    .trip-form input{
+    width: 100%
+    }
+    p {
+      margin-top: 0;
+    margin-bottom: 0.5rem;
+
+    }
+    label{
+    display: inline-block;
+    margin-bottom: 0rem;
+    }
+
+
+
+</style>
+{% endblock  %}
+
+{% block content %}
+	<!-- section -->
+<div class="site-wrap" id="home-section">
+
+    <div class="hero inner-page" style="background-image: url({% static 'images/bgr.jpg' %});">
+            <div class="container">
+                <div class="row align-items-end ">
+                    <div class="col-lg-3">
+                        <div class="intro">
+                            <h1><strong>Signup</strong></h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+	<div class="site-section bg-light">
+		<!-- container -->
+		<div class="container">
+			<!-- row -->
+			<div class="row align-items-center justify-content-center">
+                <div class="col-lg-7 ">
+
+                        <div class="section-heading">
+                            <h3 class="title" align="center">Sign Up</h3>
+                        </div>
+
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert alert-{{message.tags}}" role="alert">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+
+                        <form class="trip-form" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="row align-items-center justify-content-center">
+                            <div class="col-md-6 col-lg-6">
+
+                            {% for field in com_form %}
+                                <p>
+                                    {{ field.label_tag }}<br>
+                                    {{ field }}
+                                    {% for error in field.errors %}
+                                    <div class="alert alert-{{ error }}" role="alert">
+                                    {{ error }}
+                                </div>
+                                    {% endfor %}
+                                </p>
+                            {% endfor %}
+                            </div>
+                                <div class="col-md-6 col-lg-6">
+                                {% for field in up_form %}
+                                <p>
+                                    {{ field.label_tag }}<br>
+                                    {{ field }}
+                                    {% for error in field.errors %}
+                                        <p style="color: red">{{ error }}</p>
+                                    {% endfor %}
+                                </p>
+                            {% endfor %}
+                            </div>
+                            </div>
+                            <div class="mb-12 mb-md-0 col-md-12">
+                  <input type="submit" value="Sign Up"  class="btn btn-primary btn-block py-3">
+                </div>
+                            <div>
+                                <p>I already have an account? <span><a href="{% url 'login' %}">Login</a></span></p>
+                            </div>
+                        </form>
+                    <br><br><br>
+
+
+                    </div>
+                </div>
+
+
+			</div>
+			<!-- /row -->
+		</div>
+		<!-- /container -->
+	</div>
+	<!-- /section -->
+	</div>
+
+{% endblock%}

@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+<div class="hero inner-page" style="background-image: url({% static 'images/bgr.jpg' %});">
+        <div class="container">
+            <div class="row align-items-end ">
+                <div class="col-lg-5">
+                    <div class="intro">
+                        <h1><strong>Book Details</strong></h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<div class="row">
+    <div class="col-xs-3 col-md-3"></div>
+    <div class="col-xs-6 col-md-6">
+
+
+        <p class="col-lg-12 md-5 text-center pt-4">You are Booking this bus for <strong>{{Reservation.departure_Date}}
+        </strong> from <strong>{{Reservation.destination }}</strong> with <span class="text-success bold"
+            style="font-weight:bold;">{{ Reservation.company}}</span>, Please proceed to make payments. Thank You</p>
+        <div class="row">
+            <div class="row col-md-12 text-center justify-content-center">
+                <div class="col-md-12 text-center border-top border-bottom"><h5 style="font-weight:bold;">Book Info</h5></div>
+
+                <div class="col-md-6"><p>Name: {{ Reservation.ticket_user }} </p></div>
+                <div class="col-md-6"><p>Phone: +233{{ Reservation.client.phone }}</p></div>
+            </div>
+
+            <div class="row col-md-12 text-center justify-content-center">
+                <h6 class="col-md-12 ">Bus details</h6>
+            <p class="px-2 col-md-4">Model: <br>{{ Reservation.bus.brand }}</p>
+            <p class="px-2 col-md-3">Bus No.: <br>{{ Reservation.bus.plate_No }}</p>
+            <p class="px-2 col-md-5">Driver Phone: <br>+233{{ Reservation.bus.driver.phone_1 }}</p>
+            <p class="px-2 col-md-4">Trip date: <br>{{ Reservation.bus.departure_Date }}</p>
+            <p class="px-2 col-md-3">Time: <br>{{ Reservation.bus.departure_Time }}</p>
+            <p class="px-2 col-md-5">Journey: <br>{{ Reservation.bus.destination }}</p>
+            </div>
+
+            <div class="row col-md-12 justify-content-center border-top border-bottom">
+                <h4 class="float-left px-2 col-md-6 ">Seat No.: {{ Reservation.seat }}</h4>
+                <h4 class="float-left px-2 col-md-6">Amount: GHc {{ Reservation.amount }}</h4>
+            </div>
+
+            {% if cash  %}
+        <div class="row col-md-12 justify-content-center">
+            <a href="{% url 'book_details_view' ref=payment.ref id=Reservation.id %}"
+               class="btn btn-primary btn-md text-white my-3 col-md-6">Pay With TP-Cash</a>
+        </div>
+        {% else %}
+        <script src="https://js.paystack.co/v1/inline.js"></script>
+        <div class="row col-md-12 justify-content-center">
+            <button type="submit" onclick="payWithPayStack()" class="btn btn-warning btn-md text-white my-3 col-md-6" >Pay with MoMo </button>
+        </div>
+        <br><br>
+        {% endif %}
+
+        </div>
+
+
+
+    </div>
+
+    <script>
+        function payWithPayStack(){
+        let currency = "GHS";
+        let plan = "";
+        let ref = "{{ payment.ref }}"
+        let obj = {
+            key : "{{ paystack_public_key }}",
+            email :"{{ payment.email }}",
+            amount : "{{ payment.amount_value }}",
+            ref : ref,
+            callback: function(response){
+                window.location.href="{% url 'book_details_view' ref=payment.ref id=Reservation.id  %}";
+            }
+        }
+        if (Boolean(currency)){ obj.currency = currency.toUpperCase() }
+        if(Boolean(plan)){ obj.plan = plan;}
+        var handler = PaystackPop.setup(obj);
+        handler.openIframe();
+        }
+    </script>
+
+</div>
+
+
+{% endblock content %}
