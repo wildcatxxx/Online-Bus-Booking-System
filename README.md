@@ -41,8 +41,8 @@ A professional Django-based bus booking system with advanced seat management, pa
 ### 1. Clone Repository
 
 ```bash
-git clone <repository-url>
-cd online_booking_system
+git clone https://github.com/wildcatxxx/Online-Bus-Booking-System.git
+cd Online-Bus-Booking-System
 ```
 
 ### 2. Create Virtual Environment
